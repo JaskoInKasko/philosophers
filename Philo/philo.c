@@ -1,30 +1,32 @@
 #include "philo.h"
 
-int	ft_philo_init(t_philo *philo, char *argv[])
+int	ft_philo_init(t_data *data, char *argv[])
 {
 	int	i;
 
 	i = 0;
-	if ((philo->philo_num = ft_atol(argv[1])) > 200)
+	data->philo_num = ft_atol(argv[1]);
+	if (data->philo_num > 200 || data->philo_num == 0)
 		return (0);
-	philo->time_to_die = ft_atol(argv[2]);
-    philo->time_to_eat = ft_atol(argv[3]);
-    philo->time_to_sleep = ft_atol(argv[4]);
-    philo->time_to_think = 0;
-	if(argv[5])
-		philo->time_must_eat = ft_atol(argv[5]);
+	data->time_to_die = ft_atol(argv[2]);
+    data->time_to_eat = ft_atol(argv[3]);
+    data->time_to_sleep = ft_atol(argv[4]);
+	if (argv[5])
+		data->time_must_eat = ft_atol(argv[5]);
 	else
-		philo->time_must_eat = 0;
-	philo->philos = malloc(sizeof(t_data) * philo->philo_num);
-	if (!philo->philos)
+		data->time_must_eat = -1;
+	data->philos = malloc(sizeof(t_philo) * data->philo_num);
+	if (!data->philos)
 		return (0);
-	while(i < philo->philo_num)
+	while(i < data->philo_num && data->philo_num != 1)
 	{
-		philo->philos[i].l_fork = 0;
-		philo->philos[i].r_fork = 0;
+		data->philos[i].r_fork = 0;
+		data->philos[i].l_fork = 0;
+		data->philos[i].id = i + 1;
 		i++;
 	}
-	return  (1);
+	data->philos[0].r_fork = 0;
+	return (1);
 }
 
 int	ft_check_args(int argc, char *argv[])
@@ -33,7 +35,7 @@ int	ft_check_args(int argc, char *argv[])
 	int	letter;
 
 	arg_index = 1;
-	if (argc >= 2 && argc <= 6)
+	if (argc >= 5 && argc <= 6)
 	{
 		while(argv[arg_index] != NULL)
 		{
@@ -53,12 +55,16 @@ int	ft_check_args(int argc, char *argv[])
 
 int main(int argc, char *argv[])
 {
-	t_philo philo;
+	t_data data;
     if (ft_check_args(argc, argv) == 0)
 		return (0);
-	if (ft_philo_init(&philo, argv) == 0)
+	if (ft_philo_init(&data, argv) == 0)
 		return (0);
-	if (ft_start_process(&philo) == 0)
+	if (ft_start_process(&data) == 0)
+	{
+		free(data.philos);
 		return (0);
+	}
+	free(data.philos);
 	printf("succsess");
 }

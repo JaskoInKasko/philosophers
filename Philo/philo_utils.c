@@ -23,3 +23,16 @@ long int	ft_atol(const char *nptr)
 	res = res * nb;
 	return (res);
 }
+
+long int	timestamp(void)
+{
+	struct timeval current_time;
+    if (gettimeofday(&current_time, NULL) == -1)
+		return (-1);
+    return (current_time.tv_sec * 1000);
+}
+
+/*long int	ft_get_time()
+{
+
+}*/

@@ -20,6 +20,7 @@ int	ft_philo_init(t_data *data, char *argv[])
 		return (0);
 	while(i < data->philo_num && data->philo_num != 1)
 	{
+		data->philos[i].info = data;
 		data->philos[i].r_fork = 0;
 		data->philos[i].l_fork = 0;
 		data->philos[i].id = i + 1;
@@ -56,6 +57,7 @@ int	ft_check_args(int argc, char *argv[])
 int main(int argc, char *argv[])
 {
 	t_data data;
+
     if (ft_check_args(argc, argv) == 0)
 		return (0);
 	if (ft_philo_init(&data, argv) == 0)

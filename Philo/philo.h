@@ -4,25 +4,28 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <pthread.h>
- #include <sys/time.h>
+# include <sys/time.h>
 
 typedef struct s_philo
 {
-	pthread_t	thread;
-	int			id;
-	int			r_fork;
-	int			l_fork;
-	long int	time_last_eat;
+	pthread_t		thread;
+	int				id;
+	int				r_fork;
+	int				l_fork;
+	struct s_data	*info;
+	long int		time_last_eat;
 } t_philo;
 
 typedef struct s_data
 {   
-    t_philo		*philos;
-    int			philo_num;
-    long int	time_to_eat;
-    long int	time_to_sleep;
-    long int	time_to_die;
-	long int	time_must_eat;
+    t_philo			*philos;
+    int				philo_num;
+    long int		time_to_eat;
+    long int		time_to_sleep;
+    long int		time_to_die;
+	long int		time_must_eat;
+	long int		simultion_start;
+	pthread_mutex_t	m_fork;
 } t_data;
 
 //		PHILO

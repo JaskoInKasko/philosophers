@@ -32,7 +32,12 @@ long int	timestamp(void)
     return (current_time.tv_sec * 1000 + current_time.tv_usec / 1000);
 }
 
-/*long int	ft_get_time()
+void	ft_print_message(char *str, t_philo *philo)
 {
+	long int	time;
 
-}*/
+	time = timestamp() - philo->info->simultion_start;
+	pthread_mutex_lock(&philo->info->write);
+	printf("%ld %d %s\n", time, philo->id, str);
+	pthread_mutex_unlock(&philo->info->write);
+}

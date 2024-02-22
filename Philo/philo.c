@@ -1,10 +1,10 @@
 #include "philo.h"
 
-int	ft_philo_init(t_data *data, char *argv[])
+int	ft_data_init(t_data *data, char *argv[])
 {
 	int	i;
 
-	i = 0;
+	i = -1;
 	data->philo_num = ft_atol(argv[1]);
 	if (data->philo_num > 200 || data->philo_num == 0)
 		return (0);
@@ -15,18 +15,34 @@ int	ft_philo_init(t_data *data, char *argv[])
 		data->time_must_eat = ft_atol(argv[5]);
 	else
 		data->time_must_eat = -1;
+	data->times_has_eaten = 0;
+	data->m_fork = malloc(sizeof(pthread_mutex_t) * (data->philo_num + 1));
+	if (!data->m_fork)
+		return (0);
+	while(++i < data->philo_num + 1)
+		pthread_mutex_init(&data->m_fork[i], NULL);
+	pthread_mutex_init(&data->write, NULL);
+	pthread_mutex_init(&data->eating, NULL);
+	return (1);
+}
+
+int	ft_philo_init(t_data *data)
+{
+	int	i;
+
+	i = 0;
 	data->philos = malloc(sizeof(t_philo) * data->philo_num);
 	if (!data->philos)
 		return (0);
-	while(i < data->philo_num && data->philo_num != 1)
+	while(i < data->philo_num)
 	{
 		data->philos[i].info = data;
-		data->philos[i].r_fork = 0;
-		data->philos[i].l_fork = 0;
+		data->philos[i].r_fork = i + 1;
+		if (data->philo_num != 1)
+			data->philos[i].l_fork = i;
 		data->philos[i].id = i + 1;
 		i++;
 	}
-	data->philos[0].r_fork = 0;
 	return (1);
 }
 
@@ -60,13 +76,15 @@ int main(int argc, char *argv[])
 
     if (ft_check_args(argc, argv) == 0)
 		return (0);
-	if (ft_philo_init(&data, argv) == 0)
+	if (ft_data_init(&data, argv) == 0 || ft_philo_init(&data) == 0)
 		return (0);
 	if (ft_start_process(&data) == 0)
 	{
 		free(data.philos);
+		free(data.m_fork);
 		return (0);
 	}
 	free(data.philos);
+	free(data.m_fork);
 	printf("succsess");
 }

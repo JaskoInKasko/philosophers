@@ -15,7 +15,6 @@ int	ft_data_init(t_data *data, char *argv[])
 		data->time_must_eat = ft_atol(argv[5]);
 	else
 		data->time_must_eat = -1;
-	data->times_has_eaten = 0;
 	data->m_fork = malloc(sizeof(pthread_mutex_t) * (data->philo_num + 1));
 	if (!data->m_fork)
 		return (0);
@@ -36,8 +35,12 @@ int	ft_philo_init(t_data *data)
 		return (0);
 	while(i < data->philo_num)
 	{
+		data->philos[i].times_has_eaten = 0;
 		data->philos[i].info = data;
-		data->philos[i].r_fork = i + 1;
+		if (i + 1 == data->philo_num)
+			data->philos[i].r_fork = 0;
+		else
+			data->philos[i].r_fork = i + 1;
 		if (data->philo_num != 1)
 			data->philos[i].l_fork = i;
 		data->philos[i].id = i + 1;
@@ -85,6 +88,11 @@ int main(int argc, char *argv[])
 		return (0);
 	}
 	free(data.philos);
+	int	i = -1;
+	while(++i < data.philo_num + 1)
+		pthread_mutex_destroy(&data.m_fork[i]);
+	pthread_mutex_destroy(&data.write);
+	pthread_mutex_destroy(&data.eating);
 	free(data.m_fork);
 	printf("succsess");
 }

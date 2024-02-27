@@ -18,7 +18,8 @@ typedef struct s_philo
 	int				r_fork;
 	int				l_fork;
 	struct s_data	*info;
-	long int		time_last_eat;
+	int				times_has_eaten; // update everytime they eat "increment++"
+	long int		time_last_eat; // update everytime they eat "timestamp()"
 } t_philo;
 
 typedef struct s_data
@@ -28,9 +29,8 @@ typedef struct s_data
 	long int		time_to_die;
     long int		time_to_eat;
     long int		time_to_sleep;
-	int				time_must_eat;
-	int				times_has_eaten;
-	long int		simultion_start;
+	int				time_must_eat; // compare everytime when they ate
+	long int		simultion_start; // time_last_eat - simulation_start
 	pthread_mutex_t	*m_fork;
 	pthread_mutex_t	write;
 	pthread_mutex_t	eating;

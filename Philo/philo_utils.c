@@ -26,18 +26,16 @@ long int	ft_atol(const char *nptr)
 
 long int	timestamp(void)
 {
-	struct timeval current_time;
-    if (gettimeofday(&current_time, NULL) == -1)
+	struct timeval tv;
+    if (gettimeofday(&tv, NULL) == -1)
 		return (-1);
-    return (current_time.tv_sec * 1000 + current_time.tv_usec / 1000);
+    return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
 void	ft_print_message(char *str, t_philo *philo)
 {
-	long int	time;
-
-	time = timestamp() - philo->info->simultion_start;
+	philo->time_last_eat = timestamp() - philo->info->simultion_start;
 	pthread_mutex_lock(&philo->info->write);
-	printf("%ld %d %s\n", time, philo->id, str);
+	printf("%ld %d %s\n", philo->time_last_eat, philo->id, str);
 	pthread_mutex_unlock(&philo->info->write);
 }

@@ -43,6 +43,7 @@ int			ft_start_process(t_data *data);
 long int	ft_atol(const char *nptr);
 long int	timestamp(void);
 void		ft_print_message(char *str, t_philo *philo);
+void		ft_usleep(int ms);
 
 //      ACTIONS
 void		*routine(void *data);

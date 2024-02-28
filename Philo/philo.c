@@ -6,11 +6,13 @@ int	ft_data_init(t_data *data, char *argv[])
 
 	i = -1;
 	data->philo_num = ft_atol(argv[1]);
-	if (data->philo_num > 200 || data->philo_num == 0)
-		return (0);
 	data->time_to_die = ft_atol(argv[2]);
     data->time_to_eat = ft_atol(argv[3]);
     data->time_to_sleep = ft_atol(argv[4]);
+	if ((data->philo_num > 200 || data->philo_num <= 0)
+		|| data->time_to_die <= 0 || data->time_to_eat <= 0
+		|| data->time_to_sleep <= 0)
+		return (0);
 	if (argv[5])
 		data->time_must_eat = ft_atol(argv[5]);
 	else
@@ -32,7 +34,7 @@ int	ft_philo_init(t_data *data)
 	i = 0;
 	data->philos = malloc(sizeof(t_philo) * data->philo_num);
 	if (!data->philos)
-		return (0);
+		return (free(data->m_fork), 0);
 	while(i < data->philo_num)
 	{
 		data->philos[i].times_has_eaten = 0;

@@ -7,7 +7,6 @@ int ft_start_process(t_data *data)
 	i = 0;
 	if ((data->simultion_start = timestamp()) == -1)
 		return (0);
-	printf("%ld\n", data->simultion_start);
 	while (i < data->philo_num)
 	{
 		if (pthread_create(&data->philos[i].thread, NULL, routine, (void *) &data->philos[i]) != 0)

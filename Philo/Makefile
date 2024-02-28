@@ -7,7 +7,7 @@ OBJ = $(SRC:.c=.o)
 NAME = philo
 
 $(NAME): $(OBJ)
-	@$(CC) $(CFLAGS) -pthread $(OBJ) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 
 .PHONY: all clean fclean re
 

@@ -31,6 +31,7 @@ typedef struct s_data
     long int		time_to_sleep;
 	int				time_must_eat; // compare everytime when they ate
 	long int		simultion_start; // time_last_eat - simulation_start
+	int				is_dead;
 	pthread_mutex_t	*m_fork;
 	pthread_mutex_t	write;
 	pthread_mutex_t	eating;
@@ -39,11 +40,14 @@ typedef struct s_data
 //		PHILO
 int			ft_start_process(t_data *data);
 
-//      UTILS
+//		LIBFT
 long int	ft_atol(const char *nptr);
+int			ft_strcmp(const char *s1, const char *s2);
+
+//      UTILS
 long int	timestamp(void);
 void		ft_print_message(char *str, t_philo *philo);
-void		ft_usleep(int ms);
+int			ft_usleep(int ms, t_philo *philo);
 
 //      ACTIONS
 void		*routine(void *data);

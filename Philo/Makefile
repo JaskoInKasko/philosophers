@@ -1,13 +1,13 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 HEAD = philo.h
-SRC = philo.c philo_utils.c threads.c actions.c\
+SRC = philo.c philo_utils.c threads.c actions.c libft.c\
 
 OBJ = $(SRC:.c=.o)
 NAME = philo
 
 $(NAME): $(OBJ)
-	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+	@$(CC) $(CFLAGS) -pthread $(OBJ) -o $(NAME)
 
 .PHONY: all clean fclean re
 

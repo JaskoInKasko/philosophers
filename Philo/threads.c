@@ -9,6 +9,7 @@ int ft_start_process(t_data *data)
 		return (0);
 	while (i < data->philo_num)
 	{
+		data->philos[i].time_last_eat = timestamp();
 		if (pthread_create(&data->philos[i].thread, NULL, routine, (void *) &data->philos[i]) != 0)
 			return (0);
 		i++;

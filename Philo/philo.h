@@ -20,6 +20,7 @@ typedef struct s_philo
 	struct s_data	*info;
 	int				times_has_eaten; // update everytime they eat "increment++"
 	long int		time_last_eat; // update everytime they eat "timestamp()"
+	long int		time_to_think;
 } t_philo;
 
 typedef struct s_data
@@ -47,8 +48,7 @@ int			ft_strcmp(const char *s1, const char *s2);
 //      UTILS
 long int	timestamp(void);
 void		ft_print_message(char *str, t_philo *philo);
-int			ft_usleep(int ms, t_philo *philo);
-
+int			ft_monitoring_usleep(int ms, t_philo *philo);
 //      ACTIONS
 void		*routine(void *data);
 

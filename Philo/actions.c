@@ -7,7 +7,7 @@ void	ft_eat(t_philo *philo)
 	ft_print_message(TAKE_FORKS, philo);
 	ft_print_message(TAKE_FORKS, philo);
 	ft_print_message(EATING, philo);
-	if (ft_usleep(philo->info->time_to_eat, philo) == 0)
+	if (ft_monitoring_usleep(philo->info->time_to_eat, philo) == 0)
 		return ;
 	pthread_mutex_lock(&philo->info->eating);
 	philo->times_has_eaten++;
@@ -22,13 +22,25 @@ void	ft_sleep(t_philo *philo)
 		return ;
 	ft_print_message(SLEEPING, philo);
 	if (philo->times_has_eaten != philo->info->time_must_eat)
-		if (ft_usleep(philo->info->time_to_sleep, philo) == 0)
+		if (ft_monitoring_usleep(philo->info->time_to_sleep, philo) == 0)
 			return ;
 }
 
 void	ft_think(t_philo *philo)
 {
 	ft_print_message(THINKING, philo);
+	if (philo->info->philo_num % 2 == 0)
+	{
+		philo->time_to_think = philo->info->time_to_eat - philo->info->time_to_sleep;
+		ft_monitoring_usleep(philo->time_to_think, philo);
+	}
+	else
+	{
+		philo->time_to_think = (philo->info->time_to_eat * 2) - philo->info->time_to_sleep;
+		if (philo->time_to_think < 0)
+			philo->time_to_think = 0;
+		ft_monitoring_usleep(philo->time_to_think * 0.42, philo);
+	}
 }
 
 void	*routine(void *args)
@@ -37,7 +49,7 @@ void	*routine(void *args)
 
 	philo = (t_philo *) args;
 	if (philo->id % 2 != 0)
-		ft_usleep(42, philo);
+		ft_monitoring_usleep(42, philo);
 	while(philo->times_has_eaten != philo->info->time_must_eat
 		&& philo->info->is_dead != 1)
 	{

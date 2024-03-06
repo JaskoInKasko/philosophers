@@ -18,20 +18,20 @@ typedef struct s_philo
 	int				r_fork;
 	int				l_fork;
 	struct s_data	*info;
-	int				times_has_eaten; // update everytime they eat "increment++"
-	long int		time_last_eat; // update everytime they eat "timestamp()"
+	int				times_has_eaten;
+	long int		time_last_eat;
 	long int		time_to_think;
 } t_philo;
 
 typedef struct s_data
 {   
-    t_philo			      *philos;
+    t_philo			*philos;
     int				philo_num;
 	long int		time_to_die;
     long int		time_to_eat;
     long int		time_to_sleep;
-	int				time_must_eat; // compare everytime when they ate
-	long int		simultion_start; // time_last_eat - simulation_start
+	int				time_must_eat;
+	long int		simulation_start;
 	int				is_dead;
 	pthread_mutex_t	*m_fork;
 	pthread_mutex_t	write;
@@ -49,6 +49,9 @@ int			ft_strcmp(const char *s1, const char *s2);
 long int	timestamp(void);
 void		ft_print_message(char *str, t_philo *philo);
 int			ft_monitoring_usleep(int ms, t_philo *philo);
+void		ft_philo_clean(t_philo *philo, int n);
+void		ft_data_clean(t_data *data);
+
 //      ACTIONS
 void		*routine(void *data);
 

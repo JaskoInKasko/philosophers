@@ -5,7 +5,7 @@ int ft_start_process(t_data *data)
 	int	i;
 
 	i = 0;
-	if ((data->simultion_start = timestamp()) == -1)
+	if ((data->simulation_start = timestamp()) == -1)
 		return (0);
 	while (i < data->philo_num)
 	{

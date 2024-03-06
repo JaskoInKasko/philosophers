@@ -38,6 +38,7 @@ int	ft_philo_init(t_data *data)
 		return (free(data->m_fork), 0);
 	while(i < data->philo_num)
 	{
+		data->philos[i].time_to_think = 0;
 		data->philos[i].times_has_eaten = 0;
 		data->philos[i].info = data;
 		if (i + 1 == data->philo_num)
@@ -86,16 +87,8 @@ int main(int argc, char *argv[])
 		return (0);
 	if (ft_start_process(&data) == 0)
 	{
-		free(data.philos);
-		free(data.m_fork);
+		ft_data_clean(&data);
 		return (0);
 	}
-	free(data.philos);
-	int	i = -1;
-	while(++i < data.philo_num + 1)
-		pthread_mutex_destroy(&data.m_fork[i]);
-	pthread_mutex_destroy(&data.write);
-	pthread_mutex_destroy(&data.eating);
-	free(data.m_fork);
-	printf("succsess");
+	ft_data_clean(&data);
 }

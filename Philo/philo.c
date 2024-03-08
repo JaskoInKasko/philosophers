@@ -11,8 +11,8 @@ int	ft_data_init(t_data *data, char *argv[])
     data->time_to_sleep = ft_atol(argv[4]);
 	data->is_dead = 0;
 	if ((data->philo_num > 200 || data->philo_num <= 0)
-		|| data->time_to_die <= 0 || data->time_to_eat <= 0
-		|| data->time_to_sleep <= 0)
+		|| data->time_to_die < 60 || data->time_to_eat < 60
+		|| data->time_to_sleep < 60)
 		return (0);
 	if (argv[5])
 		data->time_must_eat = ft_atol(argv[5]);

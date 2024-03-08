@@ -29,26 +29,33 @@ void	ft_print_message(char *str, t_philo *philo)
 	pthread_mutex_unlock(&philo->info->write);
 }
 
-int	ft_monitoring_usleep(int ms, t_philo *philo)
+void	check_philo(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (1)
+	{
+		if (data->philos[i].times_has_eaten == data->time_must_eat)
+			return ;
+		if ((timestamp() - data->philos[i].time_last_eat) >= data->time_to_die)
+		{
+			ft_print_message(DIED, &data->philos[i]);
+			return ;
+		}
+		i++;
+		i %= data->philo_num;
+	}
+}
+
+void	ft_usleep(int ms, t_philo *philo)
 {
 	long int	time;
 
+	(void)philo; //remove later
 	time = timestamp();
-	if ((timestamp() - philo->time_last_eat) >= philo->info->time_to_die)
-	{
-		ft_print_message(DIED, philo);
-		return (0);
-	}
 	while (timestamp() - time < ms)
-	{
-		if ((timestamp() - philo->time_last_eat) >= philo->info->time_to_die)
-		{
-			ft_print_message(DIED, philo);
-			return (0);
-		}
 		usleep(ms / 10);
-	}
-	return (1);
 }
 
 void	ft_philo_clean(t_philo *philo, int n)

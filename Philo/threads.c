@@ -14,7 +14,7 @@ int ft_start_process(t_data *data)
 			return (0);
 		i++;
 	}
-	check_philo(data);
+	//check_philo(data);
 	i = -1;
 	while (++i < data->philo_num)
 		if (pthread_join(data->philos[i].thread, NULL) != 0)

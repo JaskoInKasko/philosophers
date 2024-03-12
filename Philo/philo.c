@@ -18,13 +18,14 @@ int	ft_data_init(t_data *data, char *argv[])
 		data->time_must_eat = ft_atol(argv[5]);
 	else
 		data->time_must_eat = -1;
-	data->m_fork = malloc(sizeof(pthread_mutex_t) * (data->philo_num + 1));
+	data->m_fork = malloc(sizeof(pthread_mutex_t) * (data->philo_num));
 	if (!data->m_fork)
 		return (0);
-	while(++i < data->philo_num + 1)
+	while(++i < data->philo_num)
 		pthread_mutex_init(&data->m_fork[i], NULL);
 	pthread_mutex_init(&data->write, NULL);
 	pthread_mutex_init(&data->eating, NULL);
+	//pthread_mutex_init(&data->table, NULL);
 	return (1);
 }
 
@@ -38,7 +39,6 @@ int	ft_philo_init(t_data *data)
 		return (free(data->m_fork), 0);
 	while(i < data->philo_num)
 	{
-		data->philos[i].time_to_think = 0;
 		data->philos[i].times_has_eaten = 0;
 		data->philos[i].info = data;
 		if (i + 1 == data->philo_num)

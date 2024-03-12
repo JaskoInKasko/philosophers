@@ -2,8 +2,16 @@
 
 void	ft_eat(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->info->m_fork[philo->r_fork]);
-	pthread_mutex_lock(&philo->info->m_fork[philo->l_fork]);
+	if (philo->id == 1)
+	{
+		pthread_mutex_lock(&philo->info->m_fork[philo->r_fork]);
+		pthread_mutex_lock(&philo->info->m_fork[philo->l_fork]);
+	}
+	else
+	{
+		pthread_mutex_lock(&philo->info->m_fork[philo->l_fork]);
+		pthread_mutex_lock(&philo->info->m_fork[philo->r_fork]);
+	}
 	ft_print_message(TAKE_FORKS, philo);
 	ft_print_message(TAKE_FORKS, philo);
 	ft_print_message(EATING, philo);

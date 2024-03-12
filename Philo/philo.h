@@ -20,7 +20,6 @@ typedef struct s_philo
 	struct s_data	*info;
 	int				times_has_eaten;
 	long int		time_last_eat;
-	long int		time_to_think;
 } t_philo;
 
 typedef struct s_data
@@ -36,6 +35,7 @@ typedef struct s_data
 	pthread_mutex_t	*m_fork;
 	pthread_mutex_t	write;
 	pthread_mutex_t	eating;
+	pthread_mutex_t	table;
 } t_data;
 
 //		PHILO

@@ -11,10 +11,10 @@ long int	timestamp(void)
 void	ft_print_message(char *str, t_philo *philo)
 {
 	long int	time;
+	pthread_mutex_lock(&philo->info->write);
 	time = timestamp() - philo->info->simulation_start;
 	if (ft_strcmp(str, "is eating") == 0)
 		philo->time_last_eat = timestamp();
-	pthread_mutex_lock(&philo->info->write);
 	if (philo->info->is_dead == 1)
 	{
 		ft_philo_clean(philo, 1);
@@ -75,7 +75,7 @@ void	ft_data_clean(t_data *data)
 
 	i = -1;
 	free(data->philos);
-	while(++i < data->philo_num + 1)
+	while(++i < data->philo_num)
 		pthread_mutex_destroy(&data->m_fork[i]);
 	pthread_mutex_destroy(&data->write);
 	pthread_mutex_destroy(&data->eating);

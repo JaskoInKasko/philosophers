@@ -24,8 +24,6 @@ int	ft_data_init(t_data *data, char *argv[])
 	while(++i < data->philo_num)
 		pthread_mutex_init(&data->m_fork[i], NULL);
 	pthread_mutex_init(&data->write, NULL);
-	pthread_mutex_init(&data->eating, NULL);
-	//pthread_mutex_init(&data->table, NULL);
 	return (1);
 }
 
@@ -41,10 +39,7 @@ int	ft_philo_init(t_data *data)
 	{
 		data->philos[i].times_has_eaten = 0;
 		data->philos[i].info = data;
-		if (i + 1 == data->philo_num)
-			data->philos[i].r_fork = 0;
-		else
-			data->philos[i].r_fork = i + 1;
+		data->philos[i].r_fork = (i + 1) % data->philo_num;
 		if (data->philo_num != 1)
 			data->philos[i].l_fork = i;
 		data->philos[i].id = i + 1;
@@ -85,10 +80,6 @@ int main(int argc, char *argv[])
 		return (0);
 	if (ft_data_init(&data, argv) == 0 || ft_philo_init(&data) == 0)
 		return (0);
-	if (ft_start_process(&data) == 0)
-	{
-		ft_data_clean(&data);
-		return (0);
-	}
+	ft_start_process(&data);
 	ft_data_clean(&data);
 }

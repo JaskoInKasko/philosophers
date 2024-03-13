@@ -34,12 +34,15 @@ typedef struct s_data
 	int				is_dead;
 	pthread_mutex_t	*m_fork;
 	pthread_mutex_t	write;
-	pthread_mutex_t	eating;
-	pthread_mutex_t	table;
 } t_data;
 
 //		PHILO
 int			ft_start_process(t_data *data);
+
+//		PHILO_STATUS
+void		check_philo(t_data *data);
+int			ft_finnished_philo(t_philo *philo);
+int			ft_dead_philo(t_philo *philo);
 
 //		LIBFT
 long int	ft_atol(const char *nptr);
@@ -48,9 +51,7 @@ int			ft_strcmp(const char *s1, const char *s2);
 //      UTILS
 long int	timestamp(void);
 void		ft_print_message(char *str, t_philo *philo);
-void		check_philo(t_data *data);
 void		ft_usleep(int ms, t_philo *philo);
-void		ft_philo_clean(t_philo *philo, int n);
 void		ft_data_clean(t_data *data);
 
 //      ACTIONS

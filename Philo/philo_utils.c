@@ -39,6 +39,22 @@ void	ft_usleep(int ms, t_philo *philo)
 	}
 }
 
+void	ft_print_error(int n)
+{
+	printf("ERROR:\n");
+	if (n == 0)
+	{
+		printf("All arguments need to be a positive integer <= INT_MAX\n");
+		printf("Philosophers <= 200\neat_time >= 60\nsleep_time >= 60\n");
+		printf("[OPTIONAL ARGUMENT]times_to_eat\n");
+	}
+	if (n == 1)
+		printf("malloc() failed!\n");
+	if (n == 2)
+		printf("pthread_create() failed!\n");
+	if (n == 3)
+		printf("pthread_join() failed!\n");
+}
 void	ft_data_clean(t_data *data)
 {
 	int	i;

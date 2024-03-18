@@ -13,14 +13,14 @@ int	ft_data_init(t_data *data, char *argv[])
 	if ((data->philo_num > 200 || data->philo_num <= 0)
 		|| data->time_to_die < 60 || data->time_to_eat < 60
 		|| data->time_to_sleep < 60)
-		return (0);
+		return (ft_print_error(0), 0);
 	if (argv[5])
 		data->time_must_eat = ft_atol(argv[5]);
 	else
 		data->time_must_eat = -1;
 	data->m_fork = malloc(sizeof(pthread_mutex_t) * (data->philo_num));
 	if (!data->m_fork)
-		return (0);
+		return (ft_print_error(1), 0);
 	while(++i < data->philo_num)
 		pthread_mutex_init(&data->m_fork[i], NULL);
 	pthread_mutex_init(&data->write, NULL);
@@ -34,7 +34,7 @@ int	ft_philo_init(t_data *data)
 	i = 0;
 	data->philos = malloc(sizeof(t_philo) * data->philo_num);
 	if (!data->philos)
-		return (free(data->m_fork), 0);
+		return (free(data->m_fork), ft_print_error(1), 0);
 	while(i < data->philo_num)
 	{
 		data->philos[i].times_has_eaten = 0;
@@ -62,7 +62,7 @@ int	ft_check_args(int argc, char *argv[])
 			while(argv[arg_index][letter] != '\0')
 			{	
 				if(!(argv[arg_index][letter] >= '0' && argv[arg_index][letter] <= '9'))
-					return (0);
+					return (ft_print_error(0), 0);
 				letter++;
 			}
 			arg_index++;

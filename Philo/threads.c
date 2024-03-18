@@ -10,13 +10,13 @@ int ft_start_process(t_data *data)
 	{
 		data->philos[i].time_last_eat = timestamp();
 		if (pthread_create(&data->philos[i].thread, NULL, routine, (void *) &data->philos[i]) != 0)
-			return (0);
+			return (ft_print_error(2), 0);
 		i++;
 	}
 	check_philo(data);
 	i = -1;
 	while (++i < data->philo_num)
 		if (pthread_join(data->philos[i].thread, NULL) != 0)
-			return (0);
+			return (ft_print_error(3), 0);
 	return (1);
 }

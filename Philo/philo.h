@@ -52,6 +52,7 @@ int			ft_strcmp(const char *s1, const char *s2);
 long int	timestamp(void);
 void		ft_print_message(char *str, t_philo *philo);
 void		ft_usleep(int ms, t_philo *philo);
+void		ft_print_error(int n);
 void		ft_data_clean(t_data *data);
 
 //      ACTIONS

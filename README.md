@@ -23,7 +23,7 @@ The project includes:
 Navigate to the project directory:
 
 ```bash
-cd Philosophers
+cd Philo
 ```
 
 Compile the project using the Makefile:
